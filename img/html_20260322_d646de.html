@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>To My Love | 致我最亲爱的一凡姐姐</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #ffe6f0 0%, #ffd9e8 100%);
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="27" viewBox="0 0 24 27"><path fill="%23ff4d6d" d="M12 2.5c-2.8-3-7.5-3-10 0-3 3-3 7.5 0 10.5l10 10 10-10c3-3 3-7.5 0-10.5-2.5-3-7.2-3-10 0z"/></svg>') 12 5, auto;
+        }
+
+        /* 飘浮的心形背景 */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart-bg {
+            position: absolute;
+            background: rgba(255, 80, 120, 0.2);
+            width: 20px;
+            height: 20px;
+            transform: rotate(45deg);
+            animation: float 12s infinite ease-in-out;
+        }
+
+        .heart-bg::before,
+        .heart-bg::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 80, 120, 0.2);
+            border-radius: 50%;
+        }
+
+        .heart-bg::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart-bg::after {
+            top: 0;
+            left: -10px;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(45deg) scale(0.5);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.6;
+            }
+            80% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-20vh) rotate(45deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* 主卡片容器 */
+        .card-container {
+            position: relative;
+            z-index: 10;
+            max-width: 700px;
+            width: 100%;
+            perspective: 1200px;
+        }
+
+        .love-card {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(2px);
+            border-radius: 65px 45px 75px 55px;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.2), 0 0 0 12px rgba(255, 215, 225, 0.5), 0 0 0 18px #ffb7c5;
+            padding: 35px 30px 45px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px) rotateX(-5deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) rotateX(0);
+            }
+        }
+
+        /* 头像/装饰区 */
+        .avatar-section {
+            margin-bottom: 20px;
+        }
+
+        .heart-icon {
+            font-size: 80px;
+            display: inline-block;
+            animation: heartbeat 1.2s infinite ease-in-out;
+            filter: drop-shadow(0 5px 12px rgba(255, 80, 120, 0.4));
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            45% { transform: scale(1.2); }
+            65% { transform: scale(1.05); }
+        }
+
+        /* 名字浪漫语 */
+        .greeting {
+            font-family: 'Dancing Script', cursive;
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #e63946, #ff8c94, #ff6f91);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        .message {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #5e2a3a;
+            margin: 20px 0;
+            padding: 0 10px;
+            font-weight: 500;
+        }
+
+        .poem {
+            background: #fff0f3;
+            border-radius: 60px 30px 60px 30px;
+            padding: 20px 25px;
+            margin: 20px 0;
+            font-style: italic;
+            border-left: 5px solid #ff6f91;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+        }
+
+        .poem p {
+            margin: 8px 0;
+            font-size: 1rem;
+            color: #a13e54;
+            font-weight: 500;
+        }
+
+        .countdown-box {
+            background: #ffeef2;
+            border-radius: 50px;
+            padding: 15px 10px;
+            margin: 25px 0;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .countdown-item {
+            text-align: center;
+            background: white;
+            border-radius: 40px;
+            padding: 8px 15px;
+            min-width: 70px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .countdown-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #e63946;
+            font-family: monospace;
+            letter-spacing: 2px;
+        }
+
+        .countdown-label {
+            font-size: 0.75rem;
+            color: #b96b7a;
+            text-transform: uppercase;
+        }
+
+        /* 按钮 */
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 25px 0 15px;
+        }
+
+        .btn {
+            border: none;
+            background: #ffd1dc;
+            padding: 12px 28px;
+            border-radius: 60px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #b13e5a;
+            cursor: pointer;
+            transition: all 0.25s;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #ff6f91;
+            color: white;
+            box-shadow: 0 8px 18px #ff6f9155;
+        }
+
+        .btn-primary:hover {
+            background: #ff4d6d;
+            transform: scale(1.02);
+            box-shadow: 0 12px 22px #ff6f9177;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #ff8da1;
+            color: #e85d7c;
+        }
+
+        .btn-outline:hover {
+            background: #ffeef2;
+            transform: translateY(-3px);
+        }
+
+        /* 音乐控制 */
+        .music-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 99;
+            background: white;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            cursor: pointer;
+            font-size: 28px;
+            transition: all 0.2s;
+            border: none;
+            color: #ff6f91;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.08);
+            background: #ffeef4;
+        }
+
+        /* 照片墙/小惊喜 */
+        .gallery {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .memory-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 30px 15px 30px 15px;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border: 2px solid white;
+            background: #ffcddc;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+
+        /* 提示特效 */
+        .floating-message {
+            position: fixed;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff6f91e6;
+            backdrop-filter: blur(8px);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-weight: bold;
+            z-index: 100;
+            animation: fadeOut 2s forwards;
+            pointer-events: none;
+            font-size: 1rem;
+            white-space: nowrap;
+        }
+
+        @keyframes fadeOut {
+            0% { opacity: 0; transform: translateX(-50%) translateY(10px);}
+            15% { opacity: 1; transform: translateX(-50%) translateY(0);}
+            85% { opacity: 1; transform: translateX(-50%) translateY(0);}
+            100% { opacity: 0; transform: translateX(-50%) translateY(-20px); visibility: hidden;}
+        }
+
+        footer {
+            margin-top: 25px;
+            font-size: 0.75rem;
+            color: #b48b97;
+        }
+
+        @media (max-width: 500px) {
+            .love-card {
+                padding: 25px 18px;
+            }
+            .greeting {
+                font-size: 2.3rem;
+            }
+            .countdown-number {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="floating-hearts" id="heartsContainer"></div>
+
+<div class="card-container">
+    <div class="love-card">
+        <div class="avatar-section">
+            <div class="heart-icon">💖✨</div>
+        </div>
+        <div class="greeting">
+            To My Dearest Love
+        </div>
+        <div class="message">
+            🌸 遇见你，是我所有浪漫故事的开始 🌸<br>
+            想把全世界的温柔都揉进一句 “我爱你”
+        </div>
+
+        <div class="poem">
+            <p>✨ 你的眼睛，是我看过最美的星河 ✨</p>
+            <p>💗 你的笑容，是我余生最想守护的风景 💗</p>
+            <p>🌹 我无法想象没有你的日子，所以，请让我赖在你身边一辈子 🌹</p>
+        </div>
+
+        <!-- 在一起的天数倒计时特效（从某个纪念日开始） -->
+        <div class="countdown-box" id="countdownBox">
+            <div class="countdown-item">
+                <div class="countdown-number" id="daysCount">---</div>
+                <div class="countdown-label">Days With You</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="hoursCount">---</div>
+                <div class="countdown-label">Hours</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="minutesCount">---</div>
+                <div class="countdown-label">Moments</div>
+            </div>
+        </div>
+
+        <!-- 互动按钮区 -->
+        <div class="btn-group">
+            <button class="btn btn-primary" id="loveLetterBtn">💌 悄悄话</button>
+            <button class="btn btn-outline" id="surpriseBtn">🎁 惊喜一刻</button>
+        </div>
+
+        <!-- 照片墙小彩蛋（emoji代替真实图片，但很可爱） -->
+        <div class="gallery">
+            <div class="memory-img">🌸</div>
+            <div class="memory-img">🌼</div>
+            <div class="memory-img">💞</div>
+            <div class="memory-img">🍰</div>
+            <div class="memory-img">🎶</div>
+        </div>
+        <footer>❤️ 每天醒来，阳光和你都在，就是我想要的未来 ❤️</footer>
+    </div>
+</div>
+
+<!-- 背景音乐控件按钮 (无自动播放, 用户点击才播放) -->
+<button class="music-btn" id="musicToggleBtn">🎵</button>
+<audio id="bgMusic" loop preload="auto">
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+    您的浏览器不支持音频播放，但浪漫依旧。
+</audio>
+
+<script>
+    // 设置纪念日 (改成你和女朋友相遇/在一起的日子！ 示例: 2023年5月20日)
+    const startDate = new Date(2025, 11, 17); // 注意月份从0开始，4表示5月20日，可修改为你的专属日期
+    // 如果想个性化，可以改为你们真正的纪念日: 例如 new Date(2022, 8, 15) 等等
+
+    function updateLoveTimer() {
+        const now = new Date();
+        const diffMs = now - startDate;
+        if (diffMs >= 0) {
+            const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            const diffHours = Math.floor((diffMs % (86400000)) / (3600000));
+            const diffMinutes = Math.floor((diffMs % 3600000) / 60000);
+            document.getElementById('daysCount').innerText = diffDays;
+            document.getElementById('hoursCount').innerText = diffHours;
+            document.getElementById('minutesCount').innerText = diffMinutes;
+        } else {
+            // 如果日期还没到
+            document.getElementById('daysCount').innerText = '0';
+            document.getElementById('hoursCount').innerText = '0';
+            document.getElementById('minutesCount').innerText = '0';
+        }
+    }
+
+    // 生成漂浮爱心背景
+    function createFloatingHearts() {
+        const container = document.getElementById('heartsContainer');
+        const heartCount = 28;
+        for (let i = 0; i < heartCount; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart-bg');
+            const size = Math.random() * 25 + 12;
+            heart.style.width = `${size}px`;
+            heart.style.height = `${size}px`;
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.animationDuration = `${Math.random() * 8 + 8}s`;
+            heart.style.animationDelay = `${Math.random() * 15}s`;
+            heart.style.opacity = Math.random() * 0.4 + 0.1;
+            // 调整伪元素尺寸
+            heart.style.setProperty('--size', `${size}px`);
+            const pseudoStyle = document.createElement('style');
+            // 动态处理伪元素不方便，直接手动设置伪元素尺寸，使用内联style？采用类的方式动态生成即可。
+            // 简单方法：直接在style里面定义heart-bg伪类通用样式,但尺寸可单独修改宽度高度？
+            // 为了让伪元素同步大小，修改width和height再设置伪元素宽高一样即可。
+            const updatePseudo = () => {
+                const styleSheet = document.createElement("style");
+                styleSheet.textContent = `
+                    .heart-bg.custom-${i}::before,
+                    .heart-bg.custom-${i}::after {
+                        width: ${size}px;
+                        height: ${size}px;
+                    }
+                `;
+                document.head.appendChild(styleSheet);
+                heart.classList.add(`custom-${i}`);
+            };
+            updatePseudo();
+            container.appendChild(heart);
+        }
+    }
+
+    // 弹出浮层消息(温柔提示)
+    function showFloatingMessage(text, emoji = "💗") {
+        const msgDiv = document.createElement('div');
+        msgDiv.className = 'floating-message';
+        msgDiv.innerHTML = `${emoji} ${text} ${emoji}`;
+        document.body.appendChild(msgDiv);
+        setTimeout(() => {
+            msgDiv.remove();
+        }, 2200);
+    }
+
+    // 生成随机的小情书
+    const loveMessages = [
+        "✨ 宝贝，你是我每一天心动的原因 ✨",
+        "🌹 想牵着你的手，从心动到古稀 🌹",
+        "💖 你是我的半糖主义，甜而不腻，却戒不掉 💖",
+        "🌸 你的名字，是我读过最短的情诗 🌸",
+        "🍬 世界很大，我的心却只装得下一个你 🍬",
+        "🌟 愿往后余生，冷暖有你，四季有你 🌟",
+        "💌 没什么特别的事，只是想你了 💌",
+        "🎀 因为你，我的世界才变得完整 🎀"
+    ];
+
+    function randomLoveMessage() {
+        const idx = Math.floor(Math.random() * loveMessages.length);
+        return loveMessages[idx];
+    }
+
+    // 惊喜彩蛋: 满屏爱心爆裂 + 特效消息
+    function createExplodingHearts() {
+        for (let i = 0; i < 45; i++) {
+            const explodeHeart = document.createElement('div');
+            explodeHeart.innerHTML = '❤️';
+            explodeHeart.style.position = 'fixed';
+            explodeHeart.style.left = `${Math.random() * 100}%`;
+            explodeHeart.style.top = `${Math.random() * 100}%`;
+            explodeHeart.style.fontSize = `${Math.random() * 28 + 18}px`;
+            explodeHeart.style.zIndex = '9999';
+            explodeHeart.style.pointerEvents = 'none';
+            explodeHeart.style.opacity = '1';
+            explodeHeart.style.transition = 'transform 0.8s ease-out, opacity 1s';
+            explodeHeart.style.transform = 'scale(0)';
+            document.body.appendChild(explodeHeart);
+            requestAnimationFrame(() => {
+                explodeHeart.style.transform = 'scale(1.2)';
+                explodeHeart.style.opacity = '0';
+            });
+            setTimeout(() => explodeHeart.remove(), 1000);
+        }
+        showFloatingMessage("你就是我的全世界 ❤️ 我爱你！", "💘");
+    }
+
+    // 甜蜜照片墙彩蛋扩展 (点击记忆图片会有甜言蜜语)
+    function bindGalleryMessages() {
+        const pics = document.querySelectorAll('.memory-img');
+        const galleryMessages = ["你像春天一样温柔", "和你一起每天都是晴天", "心之所向，是你", "想和你吃遍所有甜品", "听你喜欢的歌，世界变美好"];
+        pics.forEach((pic, idx) => {
+            pic.addEventListener('click', () => {
+                showFloatingMessage(galleryMessages[idx % galleryMessages.length], "🌸");
+                // 轻快小动画
+                pic.style.transform = 'scale(1.15)';
+                setTimeout(() => pic.style.transform = '', 200);
+            });
+        });
+    }
+
+    // 音乐播放控制
+    let musicPlaying = false;
+    const audio = document.getElementById('bgMusic');
+    const musicBtn = document.getElementById('musicToggleBtn');
+    // 为了让初次交互，避免自动播放策略
+    musicBtn.addEventListener('click', () => {
+        if (!musicPlaying) {
+            audio.play().then(() => {
+                musicPlaying = true;
+                musicBtn.innerHTML = '🔊';
+                showFloatingMessage("浪漫旋律开启，陪你听心跳的声音", "🎶");
+            }).catch(err => {
+                console.log("音频播放需要用户交互", err);
+                showFloatingMessage("点击页面任意地方即可开启音乐哦", "🎵");
+            });
+        } else {
+            audio.pause();
+            musicPlaying = false;
+            musicBtn.innerHTML = '🎵';
+            showFloatingMessage("音乐暂停，但爱不停歇", "💗");
+        }
+    });
+
+    // 页面触摸/点击任意位置尝试播放? 为了更好的用户体验，不强制自动播放，用户点击音乐按钮即可，但是为了防止某些浏览器，提供一次温柔提示
+    document.body.addEventListener('click', function once() {
+        // 如果音乐未播放且用户点击其他地方，不是音乐按钮触发的情况，可以给出提示但不强制播放。
+        if (!musicPlaying && audio.paused) {
+            // 但不自动播放，只是显示小提示，因为用户可能不想听音乐，尊重体验，仅仅提示右上角按钮，但不要自动播放。
+            // 为了不过度，仅一次。
+            document.body.removeEventListener('click', once);
+        }
+    });
+
+    // 悄悄话按钮: 弹出随机甜蜜情话
+    document.getElementById('loveLetterBtn').addEventListener('click', () => {
+        const msg = randomLoveMessage();
+        showFloatingMessage(msg, "💌");
+        // 额外做一个飘心特效
+        const miniHeart = document.createElement('div');
+        miniHeart.innerHTML = '💖';
+        miniHeart.style.position = 'fixed';
+        miniHeart.style.left = '50%';
+        miniHeart.style.bottom = '30%';
+        miniHeart.style.fontSize = '30px';
+        miniHeart.style.pointerEvents = 'none';
+        miniHeart.style.zIndex = '1000';
+        miniHeart.style.animation = 'float 1s ease-out forwards';
+        document.body.appendChild(miniHeart);
+        setTimeout(() => miniHeart.remove(), 1000);
+    });
+
+    // 惊喜按钮: 爱心爆裂 + 自定义情话
+    document.getElementById('surpriseBtn').addEventListener('click', () => {
+        createExplodingHearts();
+        setTimeout(() => {
+            showFloatingMessage("你愿意做我一辈子的公主吗？👸", "👑");
+        }, 300);
+        // 额外加一个动态心跳卡片效果
+        const card = document.querySelector('.love-card');
+        card.style.transform = 'scale(1.01)';
+        setTimeout(() => card.style.transform = '', 300);
+    });
+
+    // 初始化计时器，每秒更新浪漫时间
+    updateLoveTimer();
+    setInterval(updateLoveTimer, 1000);
+
+    // 漂浮背景生成
+    createFloatingHearts();
+
+    // 绑定记忆画廊点击
+    bindGalleryMessages();
+
+    // 一个浪漫的手动祝福：显示一段温馨欢迎
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            showFloatingMessage("欢迎来到我们的浪漫小窝 💕", "💐");
+        }, 500);
+    });
+
+    // 优雅的防抖调整卡片响应 (针对移动端)
+    let touchStart = null;
+    document.querySelector('.love-card').addEventListener('touchstart', (e) => {
+        touchStart = e.touches[0].clientX;
+    });
+    document.querySelector('.love-card').addEventListener('touchend', (e) => {
+        if(touchStart) {
+            // 滑动反馈小爱心
+            const heartFly = document.createElement('div');
+            heartFly.innerHTML = '💓';
+            heartFly.style.position = 'fixed';
+            heartFly.style.left = `${e.changedTouches[0].clientX}px`;
+            heartFly.style.top = `${e.changedTouches[0].clientY}px`;
+            heartFly.style.fontSize = '24px';
+            heartFly.style.pointerEvents = 'none';
+            heartFly.style.transition = 'all 0.6s ease';
+            heartFly.style.opacity = '1';
+            document.body.appendChild(heartFly);
+            setTimeout(() => {
+                heartFly.style.transform = 'translateY(-60px)';
+                heartFly.style.opacity = '0';
+                setTimeout(() => heartFly.remove(), 600);
+            }, 10);
+        }
+    });
+
+    // 随机生成几颗手绘心(动态增加漂浮爱心)
+    setInterval(() => {
+        if (document.querySelectorAll('.heart-bg').length < 40) {
+            const container = document.getElementById('heartsContainer');
+            const addHeart = document.createElement('div');
+            addHeart.classList.add('heart-bg');
+            const size = Math.random() * 22 + 10;
+            addHeart.style.width = `${size}px`;
+            addHeart.style.height = `${size}px`;
+            addHeart.style.left = `${Math.random() * 100}%`;
+            addHeart.style.animationDuration = `${Math.random() * 10 + 6}s`;
+            addHeart.style.opacity = Math.random() * 0.3;
+            const idx2 = Date.now() + Math.random();
+            const sty = document.createElement('style');
+            sty.textContent = `.heart-bg.temp-${idx2}::before, .heart-bg.temp-${idx2}::after { width: ${size}px; height: ${size}px; }`;
+            document.head.appendChild(sty);
+            addHeart.classList.add(`temp-${idx2}`);
+            container.appendChild(addHeart);
+            setTimeout(() => addHeart.remove(), 13000);
+        }
+    }, 8000);
+</script>
+</body>
+</html>
